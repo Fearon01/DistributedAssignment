@@ -21,7 +21,7 @@ app.get('/*', (req, res) => {
 
 // Had problems with many attempted ports and therefore had to automate to find open port
 
-let listener = app.listen(0, () => console.log('Listening on port ' + listener.address().port));
+app.listen(3000, () => console.log('Listening on port 3000'));
 
 
 
