@@ -1,15 +1,50 @@
 const express = require('express'); 
 const cors = require('cors');
 const app = express(); 
+const mysql = require('mysql');
 
 const path = require('path');
 
+let mysqlConnection = {
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'joke_norm'
+}
+ 
 app.use(cors());
 
 app.use(express.static('./public/html'));
 app.use(express.static('./public/img'));
 app.use(express.static('./public/css'));
 app.use(express.static('./public/js'));
+
+const db = mysql.createConnection(mysqlConnection);
+
+db.connect((err) => {
+    if (err) throw err;
+    console.log(' --- Connected to MySql database --- ')
+});
+
+app.get('/types', (req, res) => {
+    sql = 'SELECT * FROM tbl_type'
+
+    db.query(sql, (err, results) => {
+        if (err) res.status(500)
+        else
+            res.json(results)
+    })
+});
+
+app.get('/jokes', (req, res) => {
+    sql = 'SELECT * FROM tbl_jokes'
+
+    db.query(sql, (err, results) => {
+        if (err) res.status(500)
+        else
+            res.json(results)
+    })
+});
 
 app.get(['/', '/index.html'], (req, res) => {
     res.sendFile('./public/html/index.html')
