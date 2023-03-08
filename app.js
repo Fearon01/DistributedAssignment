@@ -9,7 +9,7 @@ let mysqlConnection = {
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'joke_norm'
+    database: 'Azure'
 }
  
 app.use(cors());
@@ -40,7 +40,7 @@ app.get('/jokes', (req, res) => {
     sql = 'SELECT * FROM tbl_jokes'
 
     db.query(sql, (err, results) => {
-        if (err) res.status(500)
+        if (err) res.status(500).send('500 ERROR')
         else
             res.json(results)
     })
